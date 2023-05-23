@@ -1,0 +1,454 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="adminMasterPage.master.cs"
+    Inherits="adminMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<%--<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>--%>
+<head id="Head1" runat="server">
+    <title>Admin - Tagit </title>
+    <%--<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <%--<link href="css/font-awesome.min.css" rel="stylesheet" />--%><link href="css/font-awesome.css"
+        rel="stylesheet" /><link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/datepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link href="css/ace.min.css" rel="stylesheet" />
+    <script src="js/ace-extra.min.js"></script>
+    <script src="js/CommonValidation.js"></script>
+  
+    <style type="text/css">
+        body {
+            font-family: Calibri;
+            font-size: 12pt;
+        }
+
+        .modalBackground {
+            background-color: gray;
+        }
+
+        .modalPopup {
+            background-color: #FFFFFF;
+            width: 250px;
+            border: solid #0DA9D0;
+        }
+
+            .modalPopup .headerModal {
+                background-color: #2FBDF1;
+                height: 30px;
+                color: White;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .modalPopup .body {
+                min-height: 50px;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .modalPopup .footer {
+                padding: 1px;
+            }
+
+            .modalPopup .yes, .modalPopup .no {
+                height: 23px;
+                color: White;
+                text-align: center;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .modalPopup .yes {
+                background-color: #2FBDF1;
+                border: 1px solid #0DA9D0;
+            }
+
+        div.image {
+            background: url("images/logo_ams.png") no-repeat;
+            opacity: 0.1;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center top;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="no-skin">
+    <form id="form1" runat="server">
+
+        <%-- <div class="image responsive"></div>--%>
+        <ajax:ToolkitScriptManager ID="script1" runat="server" EnablePartialRendering="true" EnablePageMethods="true">
+        </ajax:ToolkitScriptManager>
+        <div id="navbar" class="navbar navbar-default    navbar-collapse" style="background-color: white">
+            <script type="text/javascript">
+                try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+            </script>
+            <div class="navbar-container" id="navbar-container" style="background-color: white">
+                <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler"
+                    data-target="#sidebar">
+                    <span class="sr-only">Toggle <span style="color: rgb(32, 33, 36); font-family: consolas, &quot; lucida console&quot; , &quot; courier new&quot; , monospace; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: pre-wrap; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"></span></span><%-- <span class="sr-only">Toggle sidebar</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>--%>
+                </button>
+                <div class="navbar-header pull-left">
+                    <%-- <a href="#" class="navbar-brand">
+                        <small>
+                            <img id="idlogoimg" src="images/logo.png" />
+                        </small>
+                    </a>--%>
+                    <button class="pull-right navbar-toggle navbar-toggle-img collapsed" style="background-color: white" type="button"
+                        data-toggle="collapse" data-target=".navbar-buttons">
+                        <span class="sr-only">Toggle user menu</span>
+                        <img src="images/user.png" alt="User's Photo" />
+                    </button>
+                    <div style="vertical-align: central">
+                        <h5>
+                            <img width="11%" src="images/logo_ams.png" alt="" />
+                        </h5>
+                    </div>
+                </div>
+
+
+
+                <div class="navbar-buttons navbar-header pull-right collapse navbar-collapse" role="navigation">
+                    <ul class="nav ace-nav">
+                        <li class="light-blue"><a data-toggle="dropdown" href="#" onclick="openModalforlogout(); return false;" style="background-color: #595959;">
+                            <img class="nav-user-photo" src="images/user.png" alt="User's Photo" />
+                            <span class="user-info"><small>Welcome,</small>
+                                <asp:Label ID="lblUser" runat="server" Text=""></asp:Label>
+                            </span><i class="ace-icon fa fa-caret-down"></i></a>
+                            <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                                <%--<li>
+                                    <a href="updatepassword.aspx">
+                                        <i class="ace-icon fa fa-exchange"></i>
+                                        Update Password
+                                    </a>
+                                </li>--%>
+                                <li class="divider"></li>
+                                <li>
+                                    <%--<asp:LinkButton ID="lbtnLogOut" runat="server"  ><i class="ace-icon fa fa-power-off"></i>&nbsp;Logout</asp:LinkButton>--%>
+                                    <a onserverclick="HtmlAnchor_Click" runat="server">
+                                        <%--  href="login.aspx"--%>
+                                        <asp:Label ID="lblLogOut" runat="server" Text="Logoff"></asp:Label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.navbar-container -->
+        </div>
+        <!-- /.sidebar-shortcuts -->
+        <ul class="nav nav-list">
+            <script type="text/javascript">
+                try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+            </script>
+            <%--</div>--%>
+            <div class="main-content">
+
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </ul>
+        <!-- /.main-content -->
+        <div class="footer" style="background-color: white;">
+            <div class="footer-inner">
+                <div class="footer-content">
+                    <div class="row">
+                        <b><span>© 2022 Tagit. All rights reserved. Product by Tagit RFID Solution DMCC. </span>
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"><i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i></a></div>
+        <%--start of compulsory js--%>
+        <script src="js/jquery.min.js"></script>
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/ace-elements.min.js"></script>
+        <script src="js/ace.min.js"></script>
+        <%--end of compulsory js--%>
+        <script src="js/jquery-ui.custom.min.js"></script>
+        <script src="js/chosen.jquery.min.js"></script>
+        <script src="js/jquery.hotkeys.min.js"></script>
+        <script src="js/bootstrap-wysiwyg.min.js"></script>
+        <script src="js/fuelux.spinner.min.js"></script>
+        <script src="js/bootstrap-datepicker.min.js"></script>
+        <script src="js/jquery.autosize.min.js"></script>
+        <script src="js/jquery.inputlimiter.1.3.1.min.js"></script>
+        <script src="js/jquery.maskedinput.min.js"></script>
+        <%--start of form  js--%>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            jQuery(function ($) {
+                $('#sidebar2').insertBefore('.page-content');
+
+                $('.navbar-toggle[data-target="#sidebar2"]').insertAfter('#menu-toggler');
+
+
+                $(document).on('settings.ace.two_menu', function (e, event_name, event_val) {
+                    if (event_name == 'sidebar_fixed') {
+                        if ($('#sidebar').hasClass('sidebar-fixed')) {
+                            $('#sidebar2').addClass('sidebar-fixed');
+                            $('#navbar').addClass('h-navbar');
+                        }
+                        else {
+                            $('#sidebar2').removeClass('sidebar-fixed')
+                            $('#navbar').removeClass('h-navbar');
+                        }
+                    }
+                }).triggerHandler('settings.ace.two_menu', ['sidebar_fixed', $('#sidebar').hasClass('sidebar-fixed')]);
+            })
+        </script>
+        <script type="text/javascript">
+            jQuery(function ($) {
+                //"jQuery UI Slider"
+                //range slider tooltip example
+                $("#slider-range").css('height', '200px').slider({
+                    orientation: "vertical",
+                    range: true,
+                    min: 0,
+                    max: 100,
+                    values: [17, 67],
+                    slide: function (event, ui) {
+                        var val = ui.values[$(ui.handle).index() - 1] + "";
+
+                        if (!ui.handle.firstChild) {
+                            $("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>")
+                            .prependTo(ui.handle);
+                        }
+                        $(ui.handle.firstChild).show().children().eq(1).text(val);
+                    }
+                }).find('span.ui-slider-handle').on('blur', function () {
+                    $(this.firstChild).hide();
+                });
+
+
+                $("#slider-range-max").slider({
+                    range: "max",
+                    min: 1,
+                    max: 10,
+                    value: 2
+                });
+
+                $("#slider-eq > span").css({ width: '90%', 'float': 'left', margin: '15px' }).each(function () {
+                    // read initial values from markup and remove that
+                    var value = parseInt($(this).text(), 10);
+                    $(this).empty().slider({
+                        value: value,
+                        range: "min",
+                        animate: true
+
+                    });
+                });
+
+                $("#slider-eq > span.ui-slider-purple").slider('disable'); //disable third item
+
+
+                $('#id-input-file-1 , .id-input-file-2').ace_file_input({
+                    no_file: 'No File ...',
+                    btn_choose: 'Choose',
+                    btn_change: 'Change',
+                    droppable: false,
+                    onchange: null,
+                    thumbnail: false //| true | large
+                    //whitelist:'gif|png|jpg|jpeg'
+                    //blacklist:'exe|php'
+                    //onchange:''
+                    //
+                });
+                //pre-show a file name, for example a previously selected file
+                //$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
+
+
+                $('.id-input-file-3').ace_file_input({
+                    style: 'well',
+                    btn_choose: 'Drop files here or click to choose',
+                    btn_change: null,
+                    no_icon: 'ace-icon fa fa-cloud-upload',
+                    droppable: true,
+                    thumbnail: 'small'//large | fit
+                    //,icon_remove:null//set null, to hide remove/reset button
+                    /**,before_change:function(files, dropped) {
+                    //Check an example below
+                    //or examples/file-upload.html
+                    return true;
+                    }*/
+                    /**,before_remove : function() {
+                    return true;
+                    }*/
+                    ,
+                    preview_error: function (filename, error_code) {
+                        //name of the file that failed
+                        //error_code values
+                        //1 = 'FILE_LOAD_FAILED',
+                        //2 = 'IMAGE_LOAD_FAILED',
+                        //3 = 'THUMBNAIL_FAILED'
+                        //alert(error_code);
+                    }
+
+                }).on('change', function () {
+                    //console.log($(this).data('ace_input_files'));
+                    //console.log($(this).data('ace_input_method'));
+                });
+
+                //start date js
+                $('.date-picker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                })
+                //show datepicker when clicking on the icon
+            .next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+                //end date js
+                function showErrorAlert(reason, detail) {
+                    var msg = '';
+                    if (reason === 'unsupported-file-type') { msg = "Unsupported format " + detail; }
+                    else {
+                        //console.log("error uploading file", reason, detail);
+                    }
+                    $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                     '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+                }
+                //$('#editor1').ace_wysiwyg();//this will create the default editor will all buttons
+
+                //but we want to change a few buttons colors for the third style
+                $('#editor1').ace_wysiwyg({
+                    toolbar:
+                    [
+                        'font',
+                        null,
+                        'fontSize',
+                        null,
+                        { name: 'bold', className: 'btn-info' },
+                        { name: 'italic', className: 'btn-info' },
+                        { name: 'strikethrough', className: 'btn-info' },
+                        { name: 'underline', className: 'btn-info' },
+                        null,
+                        { name: 'insertunorderedlist', className: 'btn-success' },
+                        { name: 'insertorderedlist', className: 'btn-success' },
+                        { name: 'outdent', className: 'btn-purple' },
+                        { name: 'indent', className: 'btn-purple' },
+                        null,
+                        { name: 'justifyleft', className: 'btn-primary' },
+                        { name: 'justifycenter', className: 'btn-primary' },
+                        { name: 'justifyright', className: 'btn-primary' },
+                        { name: 'justifyfull', className: 'btn-inverse' },
+                        null,
+                        { name: 'createLink', className: 'btn-pink' },
+                        { name: 'unlink', className: 'btn-pink' },
+                        null,
+                        { name: 'insertImage', className: 'btn-success' },
+                        null,
+                        'foreColor',
+                        null,
+                        { name: 'undo', className: 'btn-grey' },
+                        { name: 'redo', className: 'btn-grey' }
+                    ],
+                    'wysiwyg': {
+                        fileUploadError: showErrorAlert
+                    }
+                }).prev().addClass('wysiwyg-style2');
+
+
+
+
+            });
+        </script>
+
+        <div class="modal fade" id="myModallogout1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">USER LOGIN</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-9">
+                                    <h5>
+                                        <label id="lbllocname">You really want to logout??</label>
+                                    </h5>
+                                    <%--<asp:TextBox ID="txtid" Visible="false" Width="100%" runat="server"></asp:TextBox>
+                                <asp:TextBox ID="txtCategoryName" ReadOnly="true" Width="100%" runat="server"></asp:TextBox>--%>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <asp:Button runat="server" OnClick="HtmlAnchor_Click" CssClass="btn btn-primary" ID="logoutbtn" Text="Yes" />
+                                    <%--  <button type="button" runat="server" class="btn btn-primary" onserverclick="HtmlAnchor_Click" data-toggle="modal" onclick="HtmlAnchor_Click">&nbsp;Yes&nbsp;</button>--%>
+
+                                    <%-- <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>--%>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModallogout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLongTitle">USER LOGIN</h3>
+
+                    </div>
+                    <div class="modal-body">
+                        <h5>
+                            <label id="lbllocname">You really want to logout??</label>
+                        </h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <asp:Button runat="server" OnClick="HtmlAnchor_Click" CssClass="btn btn-primary" ID="Button1" Text="LOGOUT" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</body>
+<%--<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>--%>
+<script type="text/javascript">
+    function openModalforlogout() {
+            <%--var name =  document.getElementById('<%=lblcat.ClientID%>').innerHTML;
+            console.log(name);
+            document.getElementById('<%= txtCategoryName.ClientID %>').value = name;--%>
+        $('#myModallogout').modal('show');
+    }
+
+</script>
+</html>
